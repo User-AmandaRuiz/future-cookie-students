@@ -751,8 +751,8 @@ function pickFortune() {
 
 function pickNumbers() {
   const nums = new Set();
-  while (nums.size < 5) nums.add(Math.floor(Math.random() * 99) + 1);
-  return [...nums];
+  while (nums.size < 6) nums.add(Math.floor(Math.random() * 60) + 1);
+  return [...nums].sort((a, b) => a - b);
 }
 
 function animateNumbers(nums) {
