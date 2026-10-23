@@ -75,6 +75,31 @@ body::before {
     0 0 56px rgba(109,79,194,0.07);
 }
 
+/* ── BACK LINK (only when opened from the Speaking Toolkit) ── */
+.back-link {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 4px 8px;
+  border-radius: var(--radius-pill);
+  transition: color 0.18s ease, background 0.18s ease;
+}
+
+.back-link[hidden] { display: none; }
+.back-link:hover { color: var(--purple); background: var(--purple-light); }
+.card.has-back { padding-top: 60px; }
+
+@media (max-width: 600px) {
+  .card.has-back { padding-top: 58px; }
+}
+
 /* ── BRAND HEADER ── */
 .brand-header { margin-bottom: 32px; }
 
@@ -509,6 +534,8 @@ body::before {
 
 <div class="card" id="card">
 
+  <a class="back-link" id="backLink" href="#" hidden>← Speaking Toolkit</a>
+
   <div class="brand-header">
     <div class="brand-badge">Simplifica Inglês</div>
     <h1 class="brand-title">Speak <span>&amp;</span> Predict</h1>
@@ -848,6 +875,16 @@ openBtn.addEventListener('click', openCookie);
 cookieStage.addEventListener('click', () => { if (!isOpen) openCookie(); });
 anotherBtn.addEventListener('click', anotherFortune);
 closeBtn.addEventListener('click', closeCookie);
+
+// ── BACK LINK ──
+// Shown only when the page was opened from the Speaking Toolkit hub (?from=toolkit),
+// so people using the direct link see the page exactly as before.
+const backLink = document.getElementById('backLink');
+if (new URLSearchParams(location.search).get('from') === 'toolkit' && history.length > 1) {
+  backLink.hidden = false;
+  card.classList.add('has-back');
+  backLink.addEventListener('click', e => { e.preventDefault(); history.back(); });
+}
 </script>
 </body>
 </html>
